@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Clase Database - Gestión de Conexión a Base de Datos
  * 
@@ -8,7 +9,8 @@
 
 require_once __DIR__ . '/../../config/constants.php';
 
-class Database {
+class Database
+{
     private static $instance = null;
     private $connection;
     private $host;
@@ -20,13 +22,14 @@ class Database {
     /**
      * Constructor privado para implementar Singleton
      */
-    private function __construct() {
+    private function __construct()
+    {
         $this->host = DB_HOST;
         $this->dbName = DB_NAME;
         $this->username = DB_USER;
         $this->password = DB_PASS;
         $this->charset = DB_CHARSET;
-        
+
         $this->connect();
     }
 
@@ -35,7 +38,8 @@ class Database {
      * 
      * @return Database
      */
-    public static function getInstance(): Database {
+    public static function getInstance(): Database
+    {
         if (self::$instance === null) {
             self::$instance = new Database();
         }
@@ -47,10 +51,11 @@ class Database {
      * 
      * @throws PDOException
      */
-    private function connect(): void {
+    private function connect(): void
+    {
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->dbName};charset={$this->charset}";
-            
+
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -59,14 +64,13 @@ class Database {
             ];
 
             $this->connection = new PDO($dsn, $this->username, $this->password, $options);
-            
+
             // Configurar timezone
             $this->connection->exec("SET time_zone = '+00:00'");
-            
+
             if (APP_DEBUG) {
                 error_log("✅ Conexión a base de datos establecida correctamente");
             }
-            
         } catch (PDOException $e) {
             error_log("❌ Error conectando a base de datos: " . $e->getMessage());
             throw new PDOException("Error de conexión a base de datos: " . $e->getMessage());
@@ -78,12 +82,13 @@ class Database {
      * 
      * @return PDO
      */
-    public function getConnection(): PDO {
+    public function getConnection(): PDO
+    {
         // Verificar si la conexión sigue activa
         if ($this->connection === null) {
             $this->connect();
         }
-        
+
         return $this->connection;
     }
 
@@ -94,7 +99,8 @@ class Database {
      * @param array $params
      * @return PDOStatement
      */
-    public function query(string $sql, array $params = []): PDOStatement {
+    public function query(string $sql, array $params = []): PDOStatement
+    {
         try {
             $stmt = $this->connection->prepare($sql);
             $stmt->execute($params);
@@ -112,7 +118,8 @@ class Database {
      * 
      * @return string
      */
-    public function lastInsertId(): string {
+    public function lastInsertId(): string
+    {
         return $this->connection->lastInsertId();
     }
 
@@ -121,7 +128,8 @@ class Database {
      * 
      * @return bool
      */
-    public function beginTransaction(): bool {
+    public function beginTransaction(): bool
+    {
         return $this->connection->beginTransaction();
     }
 
@@ -130,7 +138,8 @@ class Database {
      * 
      * @return bool
      */
-    public function commit(): bool {
+    public function commit(): bool
+    {
         return $this->connection->commit();
     }
 
@@ -139,7 +148,8 @@ class Database {
      * 
      * @return bool
      */
-    public function rollback(): bool {
+    public function rollback(): bool
+    {
         return $this->connection->rollback();
     }
 
@@ -148,7 +158,8 @@ class Database {
      * 
      * @return bool
      */
-    public function inTransaction(): bool {
+    public function inTransaction(): bool
+    {
         return $this->connection->inTransaction();
     }
 
@@ -160,7 +171,8 @@ class Database {
     /**
      * Previene la deserialización del objeto
      */
-    public function __wakeup() {
+    public function __wakeup()
+    {
         throw new Exception("No se puede deserializar el singleton Database");
     }
 }

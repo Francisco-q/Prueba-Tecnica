@@ -1,5 +1,4 @@
 <?php
-// Endpoint API básico para productos
 header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../vendor/autoload.php'; // en caso de usar autoload
@@ -56,8 +55,8 @@ try {
 
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
-
 } catch (Exception $e) {
+    error_log($e->getMessage()); // Log del error para depuración
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
