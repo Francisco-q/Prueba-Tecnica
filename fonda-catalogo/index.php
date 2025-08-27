@@ -5,23 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fonda Juanita - Catálogo de Productos</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <h1>🎉 Fonda Juanita</h1>
-            <p>Deliciosos productos para el 18 de Septiembre</p>
-            <button id="btnAgregar" class="btn-primary">+ Agregar Producto</button>
-        </div>
-    </header>
-
-    <main class="container">
-        <div id="catalogoProductos" class="catalogo-grid">
+    <div class="header">
+        FONDA JUANITA - Catálogo de Productos
+    </div>
+    <button id="btnAgregar" class="add-product-btn">+ Agregar Producto</button>
+    <div class="catalogo-container">
+        <div id="catalogoProductos" class="product-grid">
             <!-- Los productos se cargarán aquí dinámicamente -->
         </div>
-    </main>
+    </div>
 
     <!-- Modal para agregar/editar productos -->
     <div id="modalProducto" class="modal">
@@ -51,7 +47,7 @@
         </div>
     </div>
 
-    <script src="assets/js/app.js"></script>
+    <script src="../assets/js/app.js"></script>
 </body>
 
 </html>
