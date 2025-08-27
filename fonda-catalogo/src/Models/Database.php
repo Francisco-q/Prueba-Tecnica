@@ -6,7 +6,7 @@
  * Utiliza PDO para máxima seguridad y compatibilidad
  */
 
-require_once __DIR__ . '/../config/constants.php';
+require_once __DIR__ . '/../../config/constants.php';
 
 class Database {
     private static $instance = null;
